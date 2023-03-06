@@ -1,5 +1,5 @@
 //Creating book related APIs like get, add and delete book
-const bookRouter = require("express").Router;
+const bookRouter = require("express").Router();
 const Book = require("../models/book");
 
 //Get All books
@@ -81,4 +81,4 @@ bookRouter.delete("/:id", async (req, res) => {
   }
 });
 
-module.exports = bookRouter;
+module.exports = { bookRouter };
