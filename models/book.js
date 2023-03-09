@@ -6,27 +6,37 @@ const bookSchema = new Schema({
     required: true,
     trim: true,
   },
-  cost: {
-    type: Number,
-    required: true,
-  },
   author: {
     type: String,
-    required: true,
-    trim: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-  publishedOn: {
-    type: Date,
     required: true,
   },
   description: {
     type: String,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+  },
+  updatedAt: {
+    type: Date,
+  },
+});
+
+bookSchema.pre("save", function (next) {
+  let currentDateTime = Date.now();
+  this.updatedAt = currentDateTime;
+  if (!this.createdAt) {
+    this.createdAt = currentDateTime;
+  }
+  next();
 });
 
 module.exports = model("Book", bookSchema);

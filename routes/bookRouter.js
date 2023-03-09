@@ -27,18 +27,18 @@ bookRouter.get("/:id", async (req, res) => {
 
 //create book
 bookRouter.post("/", async (req, res) => {
-  const { name, cost, author, quantity, publishedOn, description } = req.body;
+  const { name, author, description, price, quantity } = req.body;
+  console.log(`From Book Router: ${req.body}`);
 
   try {
     const bookEntity = new Book({
       name,
-      cost,
       author,
-      quantity,
-      publishedOn,
       description,
+      price,
+      quantity,
     });
-
+    console.log(bookEntity);
     await bookEntity.save();
     res.json(bookEntity);
   } catch (error) {
@@ -49,20 +49,19 @@ bookRouter.post("/", async (req, res) => {
 //Update book
 bookRouter.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const { name, cost, author, quantity, publishedOn, description } = req.body;
-
+  const { name, author, description, price, quantity } = req.body;
+  console.log(req.body);
   try {
     const bookEntity = await Book.findById(id);
 
     bookEntity.name = name;
     bookEntity.author = author;
     bookEntity.quantity = quantity;
-    bookEntity.cost = cost;
-    bookEntity.publishedOn = publishedOn;
-    bookentity.description = description;
+    bookEntity.price = price;
+    bookEntity.description = description;
 
     await bookEntity.save();
-
+    console.log("book updated");
     res.json(bookEntity);
   } catch (error) {
     res.status(500).send(error.message);

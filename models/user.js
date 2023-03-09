@@ -30,4 +30,20 @@ const userSchema = new Schema({
   },
 });
 
+userSchema.pre("save", function (next) {
+  let currentDatTime = Date.now();
+  this.updatedAt = currentDatTime;
+
+  if (!this.createdAt) {
+    this.createdAt = currentDatTime;
+  }
+
+  next();
+});
+
+userSchema.post("save", function (doc) {
+  this.password = "";
+  console.log(`Update done with empty password.`);
+});
+
 module.exports = model("User", userSchema);
