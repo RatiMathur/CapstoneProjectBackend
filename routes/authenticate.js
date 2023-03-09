@@ -41,9 +41,7 @@ authenticateRouter.post("/login", async (req, res) => {
       res.json({ token });
     }
   } catch (error) {
-    res.status(400).send({
-      error: error.message,
-    });
+    res.status(400).send(error.message);
   }
 });
 
