@@ -20,11 +20,17 @@ authenticateRouter.post("/signup", async (req, res) => {
   });
 
   try {
-    console.log(`Trying to save: ${userEntity}`);
-    await userEntity.save();
-    console.log("User Saved");
-    const token = generateToken(userEntity);
-    res.json({ token });
+    const existingUser = await User.findOne({ userName: userName });
+    if (existingUser) {
+      console.log("User exists");
+      res.json({ error: "The username is taken." });
+    } else {
+      console.log(`Trying to save: ${userEntity}`);
+      await userEntity.save();
+      console.log("User Saved");
+      const token = generateToken(userEntity);
+      res.json({ token });
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }

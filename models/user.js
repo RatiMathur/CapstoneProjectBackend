@@ -37,7 +37,6 @@ userSchema.pre("save", function (next) {
   if (!this.createdAt) {
     this.createdAt = currentDatTime;
   }
-
   next();
 });
 
