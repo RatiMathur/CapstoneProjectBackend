@@ -27,7 +27,7 @@ bookRouter.get("/:id", async (req, res) => {
 
 //create book
 bookRouter.post("/", async (req, res) => {
-  const { name, author, description, price, quantity } = req.body;
+  const { name, author, description, price, quantity, review } = req.body;
   console.log(`From Book Router: ${req.body}`);
 
   try {
@@ -37,6 +37,7 @@ bookRouter.post("/", async (req, res) => {
       description,
       price,
       quantity,
+      review,
     });
     console.log(bookEntity);
     await bookEntity.save();
@@ -48,8 +49,9 @@ bookRouter.post("/", async (req, res) => {
 
 //Update book
 bookRouter.put("/:id", async (req, res) => {
+  console.log("BookRouter called");
   const id = req.params.id;
-  const { name, author, description, price, quantity } = req.body;
+  const { name, author, description, price, quantity, review } = req.body;
   console.log(req.body);
   try {
     const bookEntity = await Book.findById(id);
@@ -59,6 +61,7 @@ bookRouter.put("/:id", async (req, res) => {
     bookEntity.quantity = quantity;
     bookEntity.price = price;
     bookEntity.description = description;
+    bookEntity.review = review;
 
     await bookEntity.save();
     console.log("book updated");

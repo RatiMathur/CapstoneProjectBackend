@@ -22,6 +22,9 @@ const bookSchema = new Schema({
     type: Number,
     required: true,
   },
+  review: {
+    type: Array,
+  },
   createdAt: {
     type: Date,
   },
